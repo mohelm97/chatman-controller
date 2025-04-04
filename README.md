@@ -1,7 +1,7 @@
 # 🟡 Chatman Controller
 
 <p align="center">
-  <img src="assets/chatman.jpg" width="250" alt="Chatman Toy">
+  <img src="assets/chatman.png" width="250" alt="Chatman Toy">
 </p>
 
 A reverse-engineered controller for the **Chatman toy**, allowing you to bring it back to life! Originally designed as a USB-connected talking assistant for kids, Chatman is no longer supported by its manufacturer — but that doesn't mean it's useless. This project lets you control its **LED matrix**, **eye**, **hand**, and **antenna movements** using Python.
@@ -55,15 +55,13 @@ Make sure your Chatman device is plugged into a USB port before launching the ap
 
 ## 🖥️ Running the GUI
 
+<p align="center">
+  <img src="assets/chatman_gui.png" width="300" alt="Chatman GUI Screenshot">
+</p>
+
 ```bash
 python chatman_gui.py
 ```
-
-<p align="center">
-  <img src="assets/chatman_gui.png" width="500" alt="Chatman GUI Screenshot">
-  <br>
-  <em>Example of the GUI interface</em>
-</p>
 
 This will launch a control panel where you can:
 
