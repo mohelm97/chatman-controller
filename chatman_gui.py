@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from chatman_controller import ChatmanController, EyeMovement, HandMovement, AntennaMovement
 
-class CheckboxGridApp:
+class ChatmanGUIApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Chatman Controller")
@@ -100,5 +100,5 @@ class CheckboxGridApp:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = CheckboxGridApp(root)
+    app = ChatmanGUIApp(root)
     root.mainloop()
