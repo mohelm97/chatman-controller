@@ -71,11 +71,11 @@ If the device fails to connect, an error will be shown.
 
 ---
 
-### 🔧 Running the CLI
+## 🔧 Running the CLI
 
 You can control Chatman directly from the terminal using the CLI tool `chatman_cli.py`.
 
-#### ▶ Interactive Mode
+### ▶ Interactive Mode
 
 Run without arguments or use `--interactive` to enter an interactive session:
 
@@ -85,7 +85,7 @@ python chatman_cli.py
 
 In this mode, you'll be prompted to choose eye, hand, and antenna movements, as well as LED values for Chatman's face.
 
-#### ▶ One-Time Command Mode
+### ▶ One-Time Command Mode
 
 Provide movement and LED values directly via command-line arguments:
 
@@ -106,13 +106,15 @@ python chatman_cli.py --eyes EYES_OPEN --hands HANDS_UP --antenna ANTENNAS_OUT -
 -   **--leds**: Provide 3 hexadecimal values for the face LEDs:
     -   e.g., `--leds FF 00 AA`
 
-#### ▶ No Reset Option
+### ▶ No Reset Option
 
 If you don’t want to reset Chatman on startup, use the `--no-reset` flag:
 
 ```bash
 python chatman_cli.py --no-reset --eyes EYES_OPEN --hands HANDS_UP --antenna ANTENNAS_CENTER --leds 00 FF 00
 ```
+
+> 💡 You typically only need to reset Chatman once — usually on the **first command after plugging it in**. After that, you should use `--no-reset`.
 
 ---
 
