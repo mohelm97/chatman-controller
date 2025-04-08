@@ -118,18 +118,6 @@ python chatman_cli.py --no-reset --eyes EYES_OPEN --hands HANDS_UP --antenna ANT
 
 ---
 
-## 🧩 Project Structure
-
-```text
-chatman_controller.py     # Main controller class + movement enums
-chatman_gui.py            # Graphical interface using Tkinter
-chatman_cli.py            # Command-line interface for advanced usage
-requirements.txt          # Python dependencies
-README.md                 # You are here!
-```
-
----
-
 ## 🛠️ Extend This Project
 
 Here are a few fun ideas:

@@ -1,5 +1,5 @@
 import argparse
-from chatman_controller import ChatmanController, EyeMovement, HandMovement, AntennaMovement
+from .chatman_controller import ChatmanController, EyeMovement, HandMovement, AntennaMovement
 
 def get_enum_input(enum_class):
     print(f"\nChoose {enum_class.__name__}:")

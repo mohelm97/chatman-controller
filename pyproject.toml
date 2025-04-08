@@ -1,0 +1,29 @@
+[build-system]
+# Specify the build system requirements (for example, setuptools)
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chatman_controller"
+version = "0.1.0"
+description = "A reverse-engineered controller for the Chatman toy"
+readme = "README.md"
+authors = [
+    { name="mohelm97", email="mohelm97@gmail.com" }
+]
+license = "MIT"
+dependencies = [
+    "hidapi"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["chatman_controller"]
+
+[project.scripts]
+chatman-cli = "chatman_controller.chatman_cli:main"
+chatman-gui = "chatman_controller.chatman_gui:main"
+
+[project.urls]
+Homepage = "https://github.com/mohelm97/chatman-controller"
+Repository = "https://github.com/mohelm97/chatman-controller"

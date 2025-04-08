@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from chatman_controller import ChatmanController, EyeMovement, HandMovement, AntennaMovement
+from .chatman_controller import ChatmanController, EyeMovement, HandMovement, AntennaMovement
 
 class ChatmanGUIApp:
     def __init__(self, root):
@@ -98,7 +98,10 @@ class ChatmanGUIApp:
         self.output_text.delete(0, tk.END)
         self.output_text.insert(tk.END, " ".join(hex_values_string))
 
-if __name__ == "__main__":
+def main():
     root = tk.Tk()
     app = ChatmanGUIApp(root)
     root.mainloop()
+
+if __name__ == "__main__":
+    main()
