@@ -1,5 +1,6 @@
 import hid
 import random
+import threading
 from enum import Enum
 
 
@@ -34,6 +35,8 @@ class ChatmanController:
     def __init__(self, index=0, reset=True):
         self.device = None
         self.index = index
+        self._button_callbacks = []
+        self._listening = False
         self._initialize_device(reset)
 
     def _send_data(self, data):
@@ -116,3 +119,32 @@ class ChatmanController:
     def move(self, eye: EyeMovement, hand: HandMovement, antenna: AntennaMovement, face_led: list[int]):
         command = [0x80, eye.value, hand.value, antenna.value] + face_led[:3]
         self._send_data(command)
+
+    def wait_for_button_press(self, timeout=None):
+        print("Waiting for button press...")
+        while True:
+            response = self.device.read(8, timeout)
+            if response:
+                if response[1:] == [0x5A, 0xA1, 0, 0, 0, 0, 0]:
+                    print("Button press detected!")
+                    return True
+            if timeout:
+                break
+        return False
+
+    def _start_listening(self):
+        def loop():
+            self._listening = True
+            while True:
+                response = self.device.read(8)
+                if response and response[1:] == [0x5A, 0xA1, 0, 0, 0, 0, 0]:
+                    print("Button press detected!")
+                    for cb in self._button_callbacks:
+                        cb()
+        thread = threading.Thread(target=loop, daemon=True)
+        thread.start()
+
+    def add_button_press_listener(self, callback):
+        self._button_callbacks.append(callback)
+        if not self._listening:
+            self._start_listening()

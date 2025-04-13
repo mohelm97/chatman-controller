@@ -15,6 +15,7 @@ class ChatmanGUIApp:
             self.root.destroy()
             return
 
+        self.controller.add_button_press_listener(lambda: messagebox.showinfo("Button was pressed", "The button on the head of Chatman was pressed"))
         main_frame = ttk.Frame(root, padding=10)
         main_frame.grid()
 
