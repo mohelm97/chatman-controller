@@ -1,6 +1,13 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from .chatman_controller import ChatmanController, EyeMovement, HandMovement, AntennaMovement
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logging.getLogger("chatman_controller").setLevel(logging.DEBUG)
 
 class ChatmanGUIApp:
     def __init__(self, root):

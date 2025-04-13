@@ -1,8 +1,12 @@
 import hid
 import random
 import threading
+import logging
 from enum import Enum
 
+
+logger = logging.getLogger("chatman_controller")
+logger.setLevel(logging.INFO)
 
 class EyeMovement(Enum):
     EYES_CLOSED = 1
@@ -44,7 +48,7 @@ class ChatmanController:
             raise RuntimeError("Device not initialized")
 
         command = [self.REPORT_ID] + data + [0] * (7 - len(data))
-        print(f"Sending: {bytes(command).hex()}")
+        logger.debug(f"Sending: {bytes(command).hex()}")
         self.device.write(command)
 
     def _initialize_device(self, reset):
@@ -66,21 +70,21 @@ class ChatmanController:
 
         response = self.device.read(8)
         if response:
-            print(f"Received: {bytes(response).hex()}")
+            logger.debug(f"Received: {bytes(response).hex()}")
             yy = response[4]
             if (xx + yy) & 0xFF == 0xFF:
-                print("Handshake successful!")
+                logger.info("Handshake successful!")
                 self._configure_all()
                 self.reset()
             else:
-                print("Invalid handshake response")
+                logger.info("Invalid handshake response")
 
     def reset(self):
         try:
             self._send_data([0x5A, 0x90])
             response = self.device.read(8, 1000)
             if response:
-                print(f"Received: {bytes(response).hex()}")
+                logger.debug(f"Received: {bytes(response).hex()}")
                 error_code = response[2]
                 errors = []
                 if (error_code & 1) == 1:
@@ -90,11 +94,11 @@ class ChatmanController:
                 if (error_code & 4) == 4:
                     errors.append("Antennas")
                 if errors:
-                    print(f"Reset failed: {', '.join(errors)}")
+                    logger.info(f"Reset failed: {', '.join(errors)}")
                 else:
-                    print("Reset successful")
+                    logger.info("Reset successful")
         except Exception as e:
-            print(f"Reset error: {e}")
+            logger.info(f"Reset error: {e}")
 
     def _send_config(self, config_id, byte_data):
         array = [0] * 5
@@ -121,12 +125,13 @@ class ChatmanController:
         self._send_data(command)
 
     def wait_for_button_press(self, timeout=None):
-        print("Waiting for button press...")
+        logger.info("Waiting for button press...")
         while True:
             response = self.device.read(8, timeout)
             if response:
+                logger.debug(f"Received: {bytes(response).hex()}")
                 if response[1:] == [0x5A, 0xA1, 0, 0, 0, 0, 0]:
-                    print("Button press detected!")
+                    logger.info("Button press detected!")
                     return True
             if timeout:
                 break
@@ -137,8 +142,9 @@ class ChatmanController:
             self._listening = True
             while True:
                 response = self.device.read(8)
+                logger.debug(f"Received: {bytes(response).hex()}")
                 if response and response[1:] == [0x5A, 0xA1, 0, 0, 0, 0, 0]:
-                    print("Button press detected!")
+                    logger.info("Button press detected!")
                     for cb in self._button_callbacks:
                         cb()
         thread = threading.Thread(target=loop, daemon=True)
